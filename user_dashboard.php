@@ -1,12 +1,12 @@
 <?php
-// Mulai sesi
+// Start session
 session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') {
     header('Location: login.php');
     exit;
 }
 
-// Koneksi ke database
+// Database connection
 include 'db.php';
 ?>
 
@@ -17,32 +17,31 @@ include 'db.php';
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-    <!-- Selamat datang -->
+    <!-- Welcome message -->
     <h1>Selamat datang, <?= htmlspecialchars($_SESSION['username']); ?>!</h1>
 
-    <!-- Navigasi -->
+    <!-- Navigation -->
     <nav>
         <ul>
-            <li><a href="rentals/index.php">Kelola Penyewaan</a></li>
             <li><a href="profile.php">Profil Saya</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </nav>
 
-    <!-- Statistik Penyewaan -->
+    <!-- Rental Statistics -->
     <section>
-        <h2>Statistik Penyewaan Anda</h2>
+        <h2>Statistik Penyewaan</h2>
         <?php
-        // Hitung jumlah penyewaan pengguna
+        // Count the number of rentals for the logged-in user
         $user_id = $_SESSION['user_id'];
         $rental_count = $conn->query("SELECT COUNT(*) AS total FROM rentals WHERE customer_id = $user_id")->fetch_assoc()['total'];
         ?>
         <p>Total Penyewaan Anda: <?= $rental_count; ?></p>
     </section>
 
-    <!-- Data Penyewaan Terbaru -->
+    <!-- Recent Rental Data -->
     <section>
-        <h2>Penyewaan Terbaru Anda</h2>
+        <h2>Penyewaan Terbaru</h2>
         <table>
             <thead>
                 <tr>
@@ -54,6 +53,7 @@ include 'db.php';
             </thead>
             <tbody>
                 <?php
+                // Fetch the most recent rentals for this user
                 $recent_rentals = $conn->query(
                     "SELECT rentals.rental_id, rentals.rental_date, rentals.status, cars.license_plate 
                      FROM rentals 
@@ -63,6 +63,7 @@ include 'db.php';
                      LIMIT 5"
                 );
 
+                // Check if there are any recent rentals
                 if ($recent_rentals->num_rows > 0):
                     while ($rental = $recent_rentals->fetch_assoc()):
                 ?>
@@ -83,5 +84,6 @@ include 'db.php';
             </tbody>
         </table>
     </section>
+
 </body>
 </html>
