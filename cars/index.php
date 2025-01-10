@@ -14,6 +14,7 @@ $result = $conn->query($sql);
 <body>
     <h1>Daftar Mobil</h1>
     <a href="create.php">Tambah Mobil</a>
+    <a href="../index.php">Dashboard</a>
     <table border="1">
         <tr>
             <th>ID</th>
