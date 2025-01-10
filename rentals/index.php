@@ -17,6 +17,7 @@ $result = $conn->query($sql);
 <body>
     <h1>Daftar Penyewaan</h1>
     <a href="create.php">Tambah Penyewaan</a>
+    <a href="../index.php">Dashboard</a>
     <table border="1">
         <tr>
             <th>ID</th>
@@ -28,21 +29,27 @@ $result = $conn->query($sql);
             <th>Status</th>
             <th>Aksi</th>
         </tr>
-        <?php while ($row = $result->fetch_assoc()): ?>
-        <tr>
-            <td><?= $row['rental_id'] ?></td>
-            <td><?= $row['customer_name'] ?></td>
-            <td><?= $row['license_plate'] ?></td>
-            <td><?= $row['rental_date'] ?></td>
-            <td><?= $row['return_date'] ?: '-' ?></td>
-            <td>Rp<?= number_format($row['total_price'], 2) ?></td>
-            <td><?= ucfirst($row['status']) ?></td>
-            <td>
-                <a href="update.php?id=<?= $row['rental_id'] ?>">Edit</a>
-                <a href="delete.php?id=<?= $row['rental_id'] ?>">Hapus</a>
-            </td>
-        </tr>
-        <?php endwhile; ?>
+        <?php if ($result->num_rows > 0): ?>
+            <?php while ($row = $result->fetch_assoc()): ?>
+                <tr>
+                    <td><?= $row['rental_id'] ?></td>
+                    <td><?= htmlspecialchars($row['customer_name']) ?></td>
+                    <td><?= htmlspecialchars($row['license_plate']) ?></td>
+                    <td><?= htmlspecialchars($row['rental_date']) ?></td>
+                    <td><?= $row['return_date'] ? htmlspecialchars($row['return_date']) : '-' ?></td>
+                    <td><?= htmlspecialchars($row['total_price']) ?></td>
+                    <td><?= ucfirst(htmlspecialchars($row['status'])) ?></td>
+                    <td>
+                        <a href="update.php?id=<?= $row['rental_id'] ?>">Edit</a>
+                        <a href="delete.php?id=<?= $row['rental_id'] ?>">Hapus</a>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="8">Tidak ada data penyewaan.</td>
+            </tr>
+        <?php endif; ?>
     </table>
-</body>
+    <script src="../assets/main.js"></script>
 </html>

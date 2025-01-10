@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html>
 <head>
     <title>Tambah Mobil</title>
+    <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
     <h1>Tambah Mobil</h1>

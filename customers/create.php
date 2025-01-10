@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $sql = "INSERT INTO customers (name, email, phone, address) VALUES ('$name', '$email', '$phone', '$address')";
     if ($conn->query($sql) === TRUE) {
-        header("Location: ");
+        header("Location: index.php ");
         exit;
     } else {
         echo "Error: " . $conn->error;
@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html>
 <head>
     <title>Tambah Pelanggan</title>
+    <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
     <h1>Tambah Pelanggan</h1>
@@ -32,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <label>Telepon:</label>
         <input type="text" name="phone" required><br>
         <label>Alamat:</label>
-        <textarea name="address" required></textarea><br>
+        <input type="text" name="address" required><br>
         <button type="submit">Simpan</button>
     </form>
 </body>

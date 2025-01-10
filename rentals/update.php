@@ -39,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html>
 <head>
     <title>Edit Penyewaan</title>
+    <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
     <h1>Edit Penyewaan</h1>
@@ -68,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="date" name="return_date" value="<?= $data['return_date'] ?>"><br>
 
         <label>Total Harga:</label>
-        <input type="number" name="total_price" value="<?= $data['total_price'] ?>" required><br>
+        <input type="text" name="total_price" id="total_price" readonly required><br>
 
         <label>Status:</label>
         <select name="status">
